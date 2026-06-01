@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="ProPresenter Roster Dashboard">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiUHJvUHJlc2VudGVyIFJvc3RlciIsInNob3J0X25hbWUiOiJSb3N0ZXIiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzFhMWEyZSIsInRoZW1lX2NvbG9yIjoiIzFhMWEyZSIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDE5MiAxOTInJTNFJTNDcmVjdCB3aWR0aD0nMTkyJyBoZWlnaHQ9JzE5MicgZmlsbD0nIzFhMWEyZScvJTNFJTNDdGV4dCB4PSc5NicgeT0nMTA4JyBmb250LXNpemU9JzgwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmaWxsPSd3aGl0ZScgZm9udC1mYW1pbHk9J0FyaWFsJyUzRSYjMTI4MTk3OyUzQy90ZXh0JTNFJTNDL3N2ZyUzRSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dfQ==">
+    <title>ProPresenter Roster Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="morestyles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="app-title">Multimedia Roster Dashboard</div>
+            <div class="header-actions">
+                <button class="btn btn-toggle active" onclick="toggleView('manual')" id="btn-sop">
+                    SOP Manual
+                </button>
+                <button class="btn btn-toggle" onclick="toggleView('calendar')" id="btn-calendar">
+                    Calendar
+                </button>
+                <button class="btn btn-toggle" onclick="toggleView('list')" id="btn-list">
+                    List
+                </button>
+                <button class="btn btn-primary" onclick="openMemberModal()">
+                    Members
+                </button>
+                <button class="btn btn-secondary" onclick="generateRoster()">
+                    Generate
+                </button>
+                <button class="btn btn-secondary" onclick="exportRoster()">
+                    Export
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="calendar-panel">
+            <div class="calendar-container">
+                
+                <div id="sopView">
+                      <div class="header-right">
+                        <span id="hdr-label" style="color:var(--text3)">Step 1 of 7</span>
+                        <span class="progress-pill" id="hdr-pct">0% done</span>
+                    </div>
+                    <div class="layout">
+                        <aside class="sidebar">
+                            <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+                            <div class="progress-text" id="prog-text">0 of 7 steps complete</div>
+                            <div class="sidebar-label">Steps</div>
+                            <button class="nav-item active" data-nav="0" onclick="goTo(0)">
+                            <span class="nav-num">1</span>
+                            <span class="nav-label">Turn on devices</span>
+                            </button>
+                            <button class="nav-item" data-nav="1" onclick="goTo(1)">
+                            <span class="nav-num">2</span>
+                            <span class="nav-label">Open Pro Presenter</span>
+                            </button>
+                            <button class="nav-item" data-nav="2" onclick="goTo(2)">
+                            <span class="nav-num">3</span>
+                            <span class="nav-label">Check announcements</span>
+                            </button>
+                            <button class="nav-item" data-nav="3" onclick="goTo(3)">
+                            <span class="nav-num">4</span>
+                            <span class="nav-label">Add songs</span>
+                            </button>
+                            <button class="nav-item" data-nav="4" onclick="goTo(4)">
+                            <span class="nav-num">5</span>
+                            <span class="nav-label">Add sermon PPT</span>
+                            </button>
+                            <button class="nav-item" data-nav="5" onclick="goTo(5)">
+                            <span class="nav-num">6</span>
+                            <span class="nav-label">Run live service</span>
+                            </button>
+                            <button class="nav-item" data-nav="6" onclick="goTo(6)">
+                            <span class="nav-num">7</span>
+                            <span class="nav-label">Shut everything down</span>
+                            </button>
+                        </aside>
+
+                        <main class="main">
+
+                            <div class="step-panel active" data-step="0">
+                            <div class="step-eyebrow"><span class="step-badge">Step 1 of 7</span></div>
+                            <h1 class="step-h">Turn on all devices</h1>
+                            <p class="step-sub">Power on every display device before doing anything else. They need a moment to warm up and sync before Pro Presenter can use them.</p>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg></div>
+                                <span class="card-title">Devices to power on</span>
+                                </div>
+                                <div class="card-body">
+                                <ul class="cl">
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Computer (main)</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>TV 1</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>TV 2</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Stage screen</span></li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="step-footer">
+                                <button class="mark-btn" onclick="markDone(0)">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
+                                </button>
+                                <div style="display:flex;gap:8px">
+                                <button class="btn" disabled>← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next step →</button>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="step-panel" data-step="1">
+                            <div class="step-eyebrow"><span class="step-badge">Step 2 of 7</span></div>
+                            <h1 class="step-h">Open Pro Presenter</h1>
+                            <p class="step-sub">Launch Pro Presenter and wait for it to fully load before continuing. Don't click around while it's loading — let it finish first.</p>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+                                <span class="card-title">Launch checklist</span>
+                                </div>
+                                <div class="card-body">
+                                <div class="tip">
+                                    <div class="tip-lbl">Where to find it</div>
+                                    Pro Presenter is in the taskbar or as a desktop shortcut. It has an orange square icon. Double-click to open.
+                                </div>
+                                <ul class="cl">
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Pro Presenter is open and fully loaded</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Playlists panel is visible on the left side</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Announcement and Suara Gembala playlists are visible</span></li>
+                                </ul>
+                                <img src="./assets/propresenter.png" alt="Pro Presenter icon">
+                                </div>
+                            </div>
+                            <div class="step-footer">
+                                <button class="mark-btn" onclick="markDone(1)">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
+                                </button>
+                                <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next step →</button>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="step-panel" data-step="2">
+                            <div class="step-eyebrow"><span class="step-badge">Step 3 of 7</span></div>
+                            <h1 class="step-h">Check Announcement &amp; Suara Gembala</h1>
+                            <p class="step-sub">Before the service, make sure both files are the latest version. Each comes from a different source — check both.</p>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                                <span class="card-title">Announcement</span>
+                                </div>
+                                <div class="card-body">
+                                <div class="sub-lbl" style="margin-top:0">Source</div>
+                                <div class="pills">
+                                    <span class="pill">
+                                    <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                    Gmail
+                                    </span>
+                                </div>
+                                <div class="tip">
+                                    <div class="tip-lbl">How to find it</div>
+                                    Open Gmail and look for the latest email from <strong>Richard Lorensyah</strong> with subject "Announcement". Download the attached PowerPoint file.
+                                </div>
+                                <ul class="cl">
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Downloaded latest Announcement file from Gmail (Richard)</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Updated the Announcement playlist in Pro Presenter</span></li>
+                                </ul>
+                                <img src="./assets/email.png" alt="Email icon" style="height:10vw">
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                                <span class="card-title">Suara Gembala</span>
+                                </div>
+                                <div class="card-body">
+                                <div class="sub-lbl" style="margin-top:0">Source</div>
+                                <div class="pills">
+                                    <span class="pill">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                    Telegram
+                                    </span>
+                                    <span class="pill">
+                                    <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                                    Google Drive link inside
+                                    </span>
+                                </div>
+                                <div class="tip">
+                                    <div class="tip-lbl">How to find it</div>
+                                    Open the Suara Gembala Telegram channel. Find the latest message from <strong>Yanuar Kurniawan</strong> — it contains a Google Drive link. Click the link and download the video file.
+                                </div>
+                                <ul class="cl">
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Opened Telegram and found Yanuar's latest message</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Downloaded video via the Google Drive link</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Updated the Suara Gembala playlist in Pro Presenter</span></li>
+                                </ul>
+                                <img src="./assets/tele.png" alt="Telegram icon">
+                                </div>
+                            </div>
+                            <div class="step-footer">
+                                <button class="mark-btn" onclick="markDone(2)">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
+                                </button>
+                                <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next step →</button>
+                                </div>
+                            </div>
+                            </div>
+
+                            <!-- STEP 4 -->
+                            <div class="step-panel" data-step="3">
+                            <div class="step-eyebrow"><span class="step-badge">Step 4 of 7</span></div>
+                            <h1 class="step-h">Add songs for KGC Service</h1>
+                            <p class="step-sub">Check the song list in the Services App, then load each song into the KGC Service playlist in Pro Presenter. New songs need to be added to the library first.</p>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+                                <span class="card-title">Adding an existing song</span>
+                                </div>
+                                <div class="card-body">
+                                <ul class="cl">
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Open Services App and note down all songs for this service</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Find each song in the Songs folder in Pro Presenter</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Add all songs to the KGC Service playlist</span></li>
+                                </ul>
+                                <img src="./assets/playlist.png" alt="Playlist icon" style="width:25vw;">
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+                                <span class="card-title">Adding a new song (not in library yet)</span>
+                                </div>
+                                <div class="card-body">
+                                <ul class="cl">
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Copy the full song lyrics from Google</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>In Pro Presenter, go to: <span style="font-family:'DM Mono',monospace;font-size:12.5px;background:var(--surface2);padding:1px 6px;border-radius:4px">File → Text from Clipboard</span></span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Save it to the Songs folder and update the title</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Adjust the lyric formatting / slide breaks as needed</span></li>
+                                </ul>
+                                <img src="./assets/song.png" alt="Song icon" style="width:15vw;height:10vw;">
+                                </div>
+                            </div>
+                            <div class="step-footer">
+                                <button class="mark-btn" onclick="markDone(3)">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
+                                </button>
+                                <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next step →</button>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="step-panel" data-step="4">
+                            <div class="step-eyebrow"><span class="step-badge">Step 5 of 7</span></div>
+                            <h1 class="step-h">Add Sermon PPT</h1>
+                            <p class="step-sub">Get the sermon PowerPoint from the speaker and import it into Pro Presenter under the Sermon library.</p>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+                                <span class="card-title">Step 1 — Get the file</span>
+                                </div>
+                                <div class="card-body">
+                                <ul class="cl">
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Download the PPT from Gmail (check for attachment from speaker), OR</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Copy the file directly from the speaker's USB drive</span></li>
+                                </ul>
+                                <img src="./assets/email_slide.png" alt="Email Slide icon" style="height:10vw">
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg></div>
+                                <span class="card-title">Step 2 — Import into Pro Presenter</span>
+                                </div>
+                                <div class="card-body">
+                                <div class="sub-lbl" style="margin-top:0">Import path</div>
+                                <div class="path">
+                                    <span class="path-step">File</span>
+                                    <span class="path-arr">›</span>
+                                    <span class="path-step">Import</span>
+                                    <span class="path-arr">›</span>
+                                    <span class="path-step">PowerPoint</span>
+                                    <span class="path-arr">›</span>
+                                    <span class="path-step">Insert File</span>
+                                </div>
+                                <div class="tip">
+                                    <div class="tip-lbl">Library selection</div>
+                                    When the dialog appears asking which library to save to, choose <strong>Sermon</strong> and click OK.
+                                </div>
+                                <ul class="cl">
+                                    <li onclick="ck(this)"><span class="cb"></span><span>File imported and library set to Sermon</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>All slides appear correctly in the Sermon library</span></li>
+                                </ul>
+                                
+                                </div>
+                            </div>
+                            <div class="step-footer">
+                                <button class="mark-btn" onclick="markDone(4)">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
+                                </button>
+                                <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next step →</button>
+                                </div>
+                            </div>
+                            </div>
+
+                            <!-- STEP 6 -->
+                            <div class="step-panel" data-step="5">
+                            <div class="step-eyebrow"><span class="step-badge">Step 6 of 7</span></div>
+                            <h1 class="step-h">Run the live service</h1>
+                            <p class="step-sub">You're live — follow the order of service from the Services App. Keep an eye on the worship leader for hand cues during songs.</p>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+                                <span class="card-title">Before service starts</span>
+                                </div>
+                                <div class="card-body">
+                                <ul class="cl">
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Put the Welcome Home slide on screen</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Play Spotify (keep playing during announcements too)</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Confirm order of service in Services App</span></li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8"/></svg></div>
+                                <span class="card-title">Keyboard shortcuts</span>
+                                </div>
+                                <div class="card-body">
+                                <div class="kbd-grid">
+                                    <div class="kbd-item"><span class="kbd">F1</span><span class="kbd-desc">Remove all slides</span></div>
+                                    <div class="kbd-item"><span class="kbd">F2</span><span class="kbd-desc">Text only</span></div>
+                                    <div class="kbd-item"><span class="kbd">F3</span><span class="kbd-desc">Background only</span></div>
+                                    <div class="kbd-item"><span class="kbd">Ctrl + 0</span><span class="kbd-desc">Lock TV slide</span></div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
+                                <span class="card-title">Hand signs from worship leader (WL)</span>
+                                </div>
+                                <div class="card-body">
+                                <div class="hand-grid">
+                                    <div class="hand-item"><div class="hand-num">1</div><div class="hand-desc">Verse 1</div></div>
+                                    <div class="hand-item"><div class="hand-num">2</div><div class="hand-desc">Chorus</div></div>
+                                    <div class="hand-item"><div class="hand-num">4</div><div class="hand-desc">Bridge</div></div>
+                                    <div class="hand-item"><div class="hand-num">3</div><div class="hand-desc">Last words / repetition</div></div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+                                <span class="card-title">Stage screen setup</span>
+                                </div>
+                                <div class="card-body">
+                                <div class="sub-lbl" style="margin-top:0">Navigation path</div>
+                                <div class="path">
+                                    <span class="path-step">Screen</span>
+                                    <span class="path-arr">›</span>
+                                    <span class="path-step">Stage Screen 1</span>
+                                </div>
+                                <div class="stage-grid">
+                                    <div class="stage-item">
+                                    <div class="stage-name">Stage Display — PNW</div>
+                                    <div class="stage-desc">Lyrics shown to singers</div>
+                                    </div>
+                                    <div class="stage-item">
+                                    <div class="stage-name">Stage Display — Sermon</div>
+                                    <div class="stage-desc">PPT shown to speaker</div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="step-footer">
+                                <button class="mark-btn" onclick="markDone(5)">
+                                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
+                                </button>
+                                <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next step →</button>
+                                </div>
+                            </div>
+                            </div>
+
+                            <!-- STEP 7 -->
+                            <div class="step-panel" data-step="6">
+                            <div class="step-eyebrow"><span class="step-badge">Step 7 of 7</span></div>
+                            <h1 class="step-h">After service — shut everything down</h1>
+                            <p class="step-sub">Once the service is fully over, turn off every device. Do not leave anything running.</p>
+                            <div class="card">
+                                <div class="card-head">
+                                <div class="card-head-icon"><svg viewBox="0 0 24 24"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg></div>
+                                <span class="card-title">Shutdown checklist</span>
+                                </div>
+                                <div class="card-body">
+                                <div class="warn" style="margin-bottom:1rem">
+                                    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                    <span>Please turn off ALL devices after service ends. Do not leave anything on.</span>
+                                </div>
+                                <ul class="cl">
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Close Pro Presenter</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Turn off TV 1</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Turn off TV 2</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Turn off stage screen</span></li>
+                                    <li onclick="ck(this)"><span class="cb"></span><span>Shut down computer</span></li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="step-footer">
+                                <span style="font-size:13px;color:var(--text3)">Final step</span>
+                                <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="finish()">Finish ✓</button>
+                                </div>
+                            </div>
+                            </div>
+
+                            <!-- Done -->
+                            <div class="done-screen" id="done-screen">
+                            <div class="done-card">
+                                <div class="done-icon">
+                                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                                </div>
+                                <h2 class="done-title">Service complete</h2>
+                                <p class="done-sub">All 7 steps done. Well done — see you next Sunday!</p>
+                                <button class="btn btn-primary" onclick="restart()">Start over</button>
+                            </div>
+                            </div>
+
+                        </main>
+                    </div>
+
+                    <!-- <div class="wrap">
+                    <h2 class="sr-only">Multimedia KGC interactive guide — 7 steps covering setup, Pro Presenter, songs, sermon, live service, and shutdown.</h2>
+
+                    <div class="guide-header">
+                        <div class="badge"><i class="ti ti-device-tv" aria-hidden="true"></i> Multimedia KGC</div>
+                        <h1 class="guide-title">Service preparation guide</h1>
+                        <p class="guide-sub">Follow each step in order. Check off tasks as you go.</p>
+                    </div>
+
+                    <div class="progress-row">
+                        <span id="prog-label">Step 1 of 7</span>
+                        <span id="prog-pct">0% complete</span>
+                    </div>
+                    <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+
+                    <div class="step-nav" id="dots"></div>
+
+                    <div id="steps">
+
+                        <div class="step-card active" data-step="0">
+                        <div class="card">
+                            <div class="card-head">
+                            <div class="step-num">1</div>
+                            <h2 class="step-title">Turn on all devices</h2>
+                            </div>
+                            <div class="card-body">
+                            <p class="desc">Power on all three display devices before doing anything else. They need a moment to warm up before use.</p>
+                            <ul class="cl">
+                                <li onclick="ck(this)"><span class="cb"></span><span>Computer (main)</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>TV 1</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>TV 2</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Stage screen</span></li>
+                            </ul>
+                            </div>
+                            <div class="card-footer">
+                            <button class="mark-btn" onclick="markDone(0)"><i class="ti ti-check" aria-hidden="true"></i> Mark complete</button>
+                            <div style="display:flex;gap:8px">
+                                <button class="btn" disabled>← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next →</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="step-card" data-step="1">
+                        <div class="card">
+                            <div class="card-head">
+                            <div class="step-num">2</div>
+                            <h2 class="step-title">Open Pro Presenter</h2>
+                            </div>
+                            <div class="card-body">
+                            <p class="desc">Launch Pro Presenter on the computer. Wait for it to fully load before moving on — don't click around while it's loading.</p>
+                            <div class="tip">
+                                <div class="tip-lbl">Where to find it</div>
+                                Pro Presenter should be in your taskbar or desktop shortcut. Look for the orange square icon.
+                            </div>
+                            <ul class="cl">
+                                <li onclick="ck(this)"><span class="cb"></span><span>Pro Presenter is open and fully loaded</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Playlists panel is visible on the left</span></li>
+                            </ul>
+                            </div>
+                            <div class="card-footer">
+                            <button class="mark-btn" onclick="markDone(1)"><i class="ti ti-check" aria-hidden="true"></i> Mark complete</button>
+                            <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next →</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="step-card" data-step="2">
+                        <div class="card">
+                            <div class="card-head">
+                            <div class="step-num">3</div>
+                            <h2 class="step-title">Check Announcement & Suara Gembala</h2>
+                            </div>
+                            <div class="card-body">
+                            <p class="desc">Before the service, make sure both the Announcement and Suara Gembala files are up to date. Each comes from a different source.</p>
+                            <div class="sub-section">
+                                <div class="sub-label">Announcement</div>
+                                <div style="margin-bottom:8px">
+                                <span class="source-pill"><i class="ti ti-mail" aria-hidden="true"></i> Gmail</span>
+                                </div>
+                                <div class="tip">
+                                <div class="tip-lbl">Where to find it</div>
+                                Check Gmail — Richard usually sends it. Look for the latest email from Richard Lorensyah with subject "Announcement".
+                                </div>
+                            </div>
+                            <div class="sub-section">
+                                <div class="sub-label">Suara Gembala</div>
+                                <div style="margin-bottom:8px">
+                                <span class="source-pill"><i class="ti ti-brand-telegram" aria-hidden="true"></i> Telegram</span>
+                                <span class="source-pill"><i class="ti ti-link" aria-hidden="true"></i> Google Drive link</span>
+                                </div>
+                                <div class="tip">
+                                <div class="tip-lbl">Where to find it</div>
+                                Open the Suara Gembala Telegram channel. Find the latest message from Yanuar — it contains a Google Drive download link.
+                                </div>
+                            </div>
+                            <ul class="cl">
+                                <li onclick="ck(this)"><span class="cb"></span><span>Downloaded latest Announcement from Gmail</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Downloaded latest Suara Gembala from Drive link</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Updated both in Pro Presenter playlists</span></li>
+                            </ul>
+                            </div>
+                            <div class="card-footer">
+                            <button class="mark-btn" onclick="markDone(2)"><i class="ti ti-check" aria-hidden="true"></i> Mark complete</button>
+                            <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next →</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="step-card" data-step="3">
+                        <div class="card">
+                            <div class="card-head">
+                            <div class="step-num">4</div>
+                            <h2 class="step-title">Add songs for KGC Service</h2>
+                            </div>
+                            <div class="card-body">
+                            <p class="desc">Get the song list from the Services App, then add each song into the KGC Service playlist in Pro Presenter. If a song isn't in the library yet, add it manually.</p>
+                            <div class="sub-section">
+                                <div class="sub-label">To add an existing song</div>
+                                <ul class="cl" style="margin-bottom:0">
+                                <li onclick="ck(this)"><span class="cb"></span><span>Open Services App and check the song list</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Find each song in the Songs folder in Pro Presenter</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Drag or add it to the KGC Service playlist</span></li>
+                                </ul>
+                            </div>
+                            <div class="sub-section" style="margin-top:1rem">
+                                <div class="sub-label">If the song is not in the library yet</div>
+                                <ul class="cl" style="margin-bottom:0">
+                                <li onclick="ck(this)"><span class="cb"></span><span>Copy the lyrics from Google</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>In Pro Presenter: <span style="font-family:var(--font-mono);font-size:12px">File → Text from Clipboard</span></span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Save to Songs folder, update the title, and adjust the lyric formatting</span></li>
+                                </ul>
+                            </div>
+                            </div>
+                            <div class="card-footer">
+                            <button class="mark-btn" onclick="markDone(3)"><i class="ti ti-check" aria-hidden="true"></i> Mark complete</button>
+                            <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next →</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="step-card" data-step="4">
+                        <div class="card">
+                            <div class="card-head">
+                            <div class="step-num">5</div>
+                            <h2 class="step-title">Add Sermon PPT</h2>
+                            </div>
+                            <div class="card-body">
+                            <p class="desc">Get the sermon PowerPoint from the speaker, then import it into Pro Presenter under the Sermon library.</p>
+                            <div class="sub-section">
+                                <div class="sub-label">Step 1 — get the file</div>
+                                <ul class="cl">
+                                <li onclick="ck(this)"><span class="cb"></span><span>Download from Gmail, OR copy from speaker's USB drive</span></li>
+                                </ul>
+                            </div>
+                            <div class="sub-section">
+                                <div class="sub-label">Step 2 — import into Pro Presenter</div>
+                                <div class="path-steps">
+                                <span class="path-step">File</span>
+                                <span class="path-arrow">›</span>
+                                <span class="path-step">Import</span>
+                                <span class="path-arrow">›</span>
+                                <span class="path-step">PowerPoint</span>
+                                <span class="path-arrow">›</span>
+                                <span class="path-step">Insert File</span>
+                                </div>
+                                <ul class="cl">
+                                <li onclick="ck(this)"><span class="cb"></span><span>When prompted to select a library, choose <strong>Sermon</strong>, then click OK</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Verify slides appear correctly in the Sermon library</span></li>
+                                </ul>
+                            </div>
+                            </div>
+                            <div class="card-footer">
+                            <button class="mark-btn" onclick="markDone(4)"><i class="ti ti-check" aria-hidden="true"></i> Mark complete</button>
+                            <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next →</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="step-card" data-step="5">
+                        <div class="card">
+                            <div class="card-head">
+                            <div class="step-num">6</div>
+                            <h2 class="step-title">Run the live service</h2>
+                            </div>
+                            <div class="card-body">
+                            <div class="tip">
+                                <div class="tip-lbl">Before service starts</div>
+                                Put the Welcome Home slide on screen first. Play Spotify while people are arriving and during announcements.
+                            </div>
+
+                            <div class="sub-section">
+                                <div class="sub-label">Keyboard shortcuts</div>
+                                <div class="kbd-grid">
+                                <div class="kbd-item"><span class="kbd">F1</span><span class="kbd-desc">Remove all slides</span></div>
+                                <div class="kbd-item"><span class="kbd">F2</span><span class="kbd-desc">Text only</span></div>
+                                <div class="kbd-item"><span class="kbd">F3</span><span class="kbd-desc">Background only</span></div>
+                                <div class="kbd-item"><span class="kbd">Ctrl + 0</span><span class="kbd-desc">Lock TV slide</span></div>
+                                </div>
+                            </div>
+
+                            <div class="sub-section">
+                                <div class="sub-label">Hand signs from worship leader</div>
+                                <div class="hand-grid">
+                                <div class="hand-item"><div class="hand-num">1</div><div class="hand-desc">Verse 1</div></div>
+                                <div class="hand-item"><div class="hand-num">2</div><div class="hand-desc">Chorus</div></div>
+                                <div class="hand-item"><div class="hand-num">4</div><div class="hand-desc">Bridge</div></div>
+                                <div class="hand-item"><div class="hand-num">3</div><div class="hand-desc">Last words / repetition</div></div>
+                                </div>
+                            </div>
+
+                            <div class="sub-section">
+                                <div class="sub-label">Stage screen setup (for singers & speaker)</div>
+                                <div class="path-steps" style="margin-bottom:0.75rem">
+                                <span class="path-step">Screen</span>
+                                <span class="path-arrow">›</span>
+                                <span class="path-step">Stage Screen 1</span>
+                                </div>
+                                <div class="stage-grid">
+                                <div class="stage-item">
+                                    <div class="stage-name">Stage Display — PNW</div>
+                                    <div class="stage-desc">Shows lyrics for the singers</div>
+                                </div>
+                                <div class="stage-item">
+                                    <div class="stage-name">Stage Display — Sermon</div>
+                                    <div class="stage-desc">Shows PPT for the speaker</div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <ul class="cl">
+                                <li onclick="ck(this)"><span class="cb"></span><span>Welcome Home slide is live before service starts</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Spotify playing for pre-service and announcements</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Order of service confirmed in Services App</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Stage screens configured for singers and speaker</span></li>
+                            </ul>
+                            </div>
+                            <div class="card-footer">
+                            <button class="mark-btn" onclick="markDone(5)"><i class="ti ti-check" aria-hidden="true"></i> Mark complete</button>
+                            <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="next()">Next →</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="step-card" data-step="6">
+                        <div class="card">
+                            <div class="card-head">
+                            <div class="step-num">7</div>
+                            <h2 class="step-title">After service — shut everything down</h2>
+                            </div>
+                            <div class="card-body">
+                            <div class="warning-box">
+                                <i class="ti ti-alert-triangle" style="font-size:18px;flex-shrink:0;margin-top:1px" aria-hidden="true"></i>
+                                <span>Please turn off ALL devices after service ends. Do not leave anything on.</span>
+                            </div>
+                            <ul class="cl">
+                                <li onclick="ck(this)"><span class="cb"></span><span>Close Pro Presenter</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Turn off TV 1</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Turn off TV 2</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Turn off stage screen</span></li>
+                                <li onclick="ck(this)"><span class="cb"></span><span>Shut down computer</span></li>
+                            </ul>
+                            </div>
+                            <div class="card-footer">
+                            <span style="font-size:12px;color:var(--color-text-secondary)">Final step</span>
+                            <div style="display:flex;gap:8px">
+                                <button class="btn" onclick="prev()">← Back</button>
+                                <button class="btn btn-primary" onclick="finish()">Finish ✓</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                    </div>
+
+                    <div class="done-screen" id="done-screen">
+                        <div class="done-icon"><i class="ti ti-circle-check" style="font-size:26px;color:var(--color-text-success)" aria-hidden="true"></i></div>
+                        <h2 class="done-title">Service complete</h2>
+                        <p class="done-sub">All 7 steps done. Well done — see you next Sunday!</p>
+                        <button class="btn btn-primary" onclick="restart()">Start over</button>
+                    </div>
+
+                    </div> -->
+                </div>
+                
+                <div class="month-nav" style="display:none">
+                    <button onclick="changeMonth(-1)">◀</button>
+                    <span class="month-title" id="currentMonthLabel">June 2026</span>
+                    <button onclick="changeMonth(1)">▶</button>
+                </div>                
+                
+                <div id="calendarView"></div>
+                <div class="list-view" id="listView"></div>
+            </div>
+        </div>
+
+        <div class="stats-panel">
+            <div class="stats-card">
+                <div class="stats-title">Total Sessions</div>
+                <div class="stats-number" id="totalSessions">0</div>
+                <div class="stats-label">Sunday services scheduled</div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-title">🌅 Morning Service</div>
+                <div class="stats-number" id="morningCount">0</div>
+                <div class="stats-label">Total assignments</div>
+                <div class="frequency-bar" id="morningFreq"></div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-title">🌙 Evening Service</div>
+                <div class="stats-number" id="eveningCount">0</div>
+                <div class="stats-label">Total assignments</div>
+                <div class="frequency-bar" id="eveningFreq"></div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-title">⏳ Pending Members</div>
+                <div class="stats-number" id="pendingCount">0</div>
+                <div class="stats-label">Awaiting confirmation</div>
+                <div class="frequency-bar" id="pendingFreq"></div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-title">Quick Stats</div>
+                <div class="frequency-bar" id="quickStats"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div>© 2026 Rock Brisbane Multimedia Team - DSG. All rights reserved. | Built for worship planning</div>
+    </footer>
+
+    <div class="modal-overlay" id="memberModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">👥 Member Management</span>
+                <button class="modal-close" onclick="closeMemberModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="member-section">
+                    <div class="member-category">
+                        <div class="member-category-title">🌅 Morning Only</div>
+                        <div id="morningMembers"></div>
+                    </div>
+                    <div class="member-category">
+                        <div class="member-category-title">🌙 Evening Only</div>
+                        <div id="eveningMembers"></div>
+                    </div>
+                    <div class="member-category">
+                        <div class="member-category-title">⏳ Pending Confirmation</div>
+                        <div id="pendingMembers"></div>
+                    </div>
+                    
+                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                        <div class="member-category-title">➕ Add New Member</div>
+                        <div class="add-member-form">
+                            <input type="text" id="newMemberName" placeholder="Enter member name..." onkeypress="if(event.key==='Enter')addMember()">
+                        </div>
+                        <div class="select-group">
+                            <select id="newMemberGroup">
+                                <option value="morning">Morning Only</option>
+                                <option value="evening">Evening Only</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="addMember()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeMemberModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="assignModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title" id="assignModalTitle">Assign Members</span>
+                <button class="modal-close" onclick="closeAssignModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="assignModalBody"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeAssignModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveAssignment()">Save Assignment</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+    <script src="app.js"></script>
+</body>
+</html>
