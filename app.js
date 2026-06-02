@@ -1,7 +1,9 @@
-const START_DATE = new Date(2026, 5, 7); 
-const END_DATE = new Date(2027, 5, 6);  
+const START_DATE = new Date('2026-05-31T00:00:00-07:00'); //new Date(2026, 6, 1); 
+console.log(`START_DATE = ${START_DATE}`);
+const END_DATE = new Date('2027-06-06T00:00:00-07:00');  
+console.log(`END_DATE = ${END_DATE}`);
 
-let currentMonth = new Date(2026, 5, 1);
+let currentMonth = new Date('2026-06-01T00:00:00-07:00');//new Date(2026, 5, 1);
 let currentView = 'calendar';
 let selectedDate = null;
 let tempAssignment = { morning: [], evening: [] };
@@ -20,13 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Object.keys(roster).length === 0) {
         generateRoster();
     }
-    // renderCalendar();
     renderStats();
     updateMemberDisplay();
 });
 
 function formatDate(date) {
-    return date.toISOString().split('T')[0];
+    return date.toLocaleDateString().split('/').reverse().join('-');
 }
 
 function parseDate(str) {
@@ -37,8 +38,8 @@ function getSundays() {
     const sundays = [];
     let d = new Date(START_DATE);
     while (d <= END_DATE) {
-        sundays.push(formatDate(d));
         d.setDate(d.getDate() + 7);
+        sundays.push(formatDate(d));
     }
     return sundays;
 }
@@ -57,6 +58,7 @@ function isSunday(date) {
 }
 
 function getMonthData(year, month) {
+    // const START_DATE = new Date('2026-05-31T00:00:00-07:00'); //new Date(2026, 6, 1); 
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const daysInMonth = lastDay.getDate();
@@ -131,6 +133,9 @@ function generateRoster() {
         }
     });
     
+    console.log('Generated roster:');
+    console.log(roster);
+    
     saveToStorage();
     renderCalendar();
     renderStats();
@@ -144,22 +149,30 @@ function renderCalendar() {
     
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
-    monthLabel.textContent = new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    
+    console.log(`Rendering calendar for ${year}-${month}`);
+    monthLabel.textContent = new Date(year, month).toLocaleDateString('en-AU', { month: 'long', year: 'numeric' });
+    console.log(monthLabel.textContent);
     const days = getMonthData(year, month);
+    console.log('Days to render:');
+    console.log(days);
     grid.innerHTML = '';
     
     days.forEach(({ date, isCurrentMonth }) => {
         const dateStr = formatDate(date);
         const dayEl = document.createElement('div');
         dayEl.className = 'calendar-day';
-        
         if (!isCurrentMonth) dayEl.classList.add('other-month');
         if (isSunday(date)) dayEl.classList.add('sunday');
         
         let html = `<div class="day-number">${date.getDate()}</div>`;
-        
+        console.log(date);
+        console.log(isSunday(date));
+        console.log(dateStr);
+        console.log(roster[dateStr]);
+        // console.log((roster[dateStr].morning.length > 0 || roster[dateStr].evening.length > 0));
         if (roster[dateStr] && (roster[dateStr].morning.length > 0 || roster[dateStr].evening.length > 0)) {
+            console.log(`adding badges`);
+            console.log(dateStr);
             html += '<div class="roster-badges">';
             roster[dateStr].morning.forEach(m => {
                 html += `<span class="roster-badge badge-morning">${m}</span>`;
@@ -168,6 +181,7 @@ function renderCalendar() {
                 html += `<span class="roster-badge badge-evening">${m}</span>`;
             });
             html += '</div>';
+            console.log(html);
         }
         
         dayEl.innerHTML = html;
@@ -186,7 +200,7 @@ function renderCalendarView() {
     const calendarView = document.getElementById('calendarView');
     calendarView.innerHTML = `
         <div class="calendar-header">
-            <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
         </div> 
         <div class="calendar-grid" id="calendarGrid"></div>
     `;
@@ -518,12 +532,12 @@ function closeAssignModal() {
 
 function exportRoster() {
     const sundays = getSundays();
-    let csv = 'Date,Day,Morning Service,Evening Service\\n';
+    let csv = 'Date,Day,Morning Service,Evening Service\n';
     
     sundays.forEach(date => {
         const d = parseDate(date);
         const data = roster[date] || { morning: [], evening: [] };
-        csv += `${date},${d.toLocaleDateString('en-US', { weekday: 'long' })},"${data.morning.join('; ')}","${data.evening.join('; ')}"\\n`;
+        csv += `${date},${d.toLocaleDateString('en-US', { weekday: 'long' })},"${data.morning.join('; ')}","${data.evening.join('; ')}"\n`;
     });
     
     const blob = new Blob([csv], { type: 'text/csv' });
