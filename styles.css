@@ -136,6 +136,7 @@ body {
     display: flex;
     gap: 1rem;
     min-height: 0;
+    flex-direction: column;
 }
 
 /* Left Panel - Calendar (75%) */
@@ -907,4 +908,22 @@ img {
     .calendar-day {
         border: 1px solid #ccc;
     }
+}
+
+.verse-panel {
+    flex: 0 0 100%;
+    width: 101%;
+    background: var(--bg-secondary);
+    flex-direction: row;
+    color: var(--text-light); 
+    gap: 1rem;
+    min-height: 0;
+    text-align: center;
+}
+
+.panel {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }
