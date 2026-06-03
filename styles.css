@@ -482,7 +482,7 @@ body {
     align-items: center;
     gap: 0.3rem;
     padding: 0.3rem 0.6rem;
-    background: var(--bg-secondary);
+    background: var(--surface);
     border: 1px solid var(--border-color);
     border-radius: 20px;
     font-size: 0.8rem;
