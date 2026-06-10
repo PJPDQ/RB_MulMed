@@ -35,6 +35,10 @@
                 <button class="btn btn-secondary" onclick="exportRoster()">
                     Export
                 </button>
+                <div class="btn btn-secondary">
+                    Import
+                    <input id="csv" type="file">
+                </div>
             </div>
         </div>
     </header>
@@ -79,7 +83,7 @@
                                 </button>
                                 <button class="nav-item" data-nav="5" onclick="goTo(5)">
                                 <span class="nav-num">6</span>
-                                <span class="nav-label">Run live service</span>
+                                <span class="nav-label">Run live service & Keyboard <strong>SHORTCUTS</strong></span>
                                 </button>
                                 <button class="nav-item" data-nav="6" onclick="goTo(6)">
                                 <span class="nav-num">7</span>
@@ -101,18 +105,22 @@
                                     <div class="card-body">
                                     <ul class="cl">
                                         <li onclick="ck(this)"><span class="cb"></span><span>Computer (main)</span></li>
-                                        <li onclick="ck(this)"><span class="cb"></span><span>TV 1</span></li>
-                                        <li onclick="ck(this)"><span class="cb"></span><span>TV 2</span></li>
-                                        <li onclick="ck(this)"><span class="cb"></span><span>Stage screen</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>TV 1 (Left)</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>TV 2 (Right)</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>TV 3 (Outside)</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>Stage screen monitor</span></li>
                                     </ul>
                                     </div>
                                 </div>
                                 <div class="step-footer">
+                                    <!-- <button class="mark-btn" onclick="markDone(0)">
+                                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
+                                    </button> -->
+                                    <div style="display:flex;gap:8px">
+                                    <button class="btn" disabled>← Back</button>
                                     <button class="mark-btn" onclick="markDone(0)">
                                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
                                     </button>
-                                    <div style="display:flex;gap:8px">
-                                    <button class="btn" disabled>← Back</button>
                                     <button class="btn btn-primary" onclick="next()">Next step →</button>
                                     </div>
                                 </div>
@@ -141,11 +149,11 @@
                                     </div>
                                 </div>
                                 <div class="step-footer">
+                                    <div style="display:flex;gap:8px">
+                                    <button class="btn" onclick="prev()">← Back</button>
                                     <button class="mark-btn" onclick="markDone(1)">
                                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
                                     </button>
-                                    <div style="display:flex;gap:8px">
-                                    <button class="btn" onclick="prev()">← Back</button>
                                     <button class="btn btn-primary" onclick="next()">Next step →</button>
                                     </div>
                                 </div>
@@ -201,7 +209,7 @@
                                         Open the Suara Gembala Telegram channel. Find the latest message from <strong>Yanuar Kurniawan</strong> — it contains a Google Drive link. Click the link and download the video file.
                                     </div>
                                     <ul class="cl">
-                                        <li onclick="ck(this)"><span class="cb"></span><span>Opened Telegram and found Yanuar's latest message</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>Opened Telegram and look for GoogleDrive Suara Gembala</span></li>
                                         <li onclick="ck(this)"><span class="cb"></span><span>Downloaded video via the Google Drive link</span></li>
                                         <li onclick="ck(this)"><span class="cb"></span><span>Updated the Suara Gembala playlist in Pro Presenter</span></li>
                                     </ul>
@@ -209,11 +217,11 @@
                                     </div>
                                 </div>
                                 <div class="step-footer">
+                                    <div style="display:flex;gap:8px">
+                                    <button class="btn" onclick="prev()">← Back</button>
                                     <button class="mark-btn" onclick="markDone(2)">
                                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
                                     </button>
-                                    <div style="display:flex;gap:8px">
-                                    <button class="btn" onclick="prev()">← Back</button>
                                     <button class="btn btn-primary" onclick="next()">Next step →</button>
                                     </div>
                                 </div>
@@ -233,7 +241,7 @@
                                     <ul class="cl">
                                         <li onclick="ck(this)"><span class="cb"></span><span>Open Services App and note down all songs for this service</span></li>
                                         <li onclick="ck(this)"><span class="cb"></span><span>Find each song in the Songs folder in Pro Presenter</span></li>
-                                        <li onclick="ck(this)"><span class="cb"></span><span>Add all songs to the KGC Service playlist</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>Add all songs to the Sunday Service or KGC Service playlist</span></li>
                                     </ul>
                                     <img src="./assets/playlist.png" alt="Playlist icon" style="width:25vw;">
                                     </div>
@@ -254,11 +262,11 @@
                                     </div>
                                 </div>
                                 <div class="step-footer">
+                                    <div style="display:flex;gap:8px">
+                                    <button class="btn" onclick="prev()">← Back</button>
                                     <button class="mark-btn" onclick="markDone(3)">
                                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
                                     </button>
-                                    <div style="display:flex;gap:8px">
-                                    <button class="btn" onclick="prev()">← Back</button>
                                     <button class="btn btn-primary" onclick="next()">Next step →</button>
                                     </div>
                                 </div>
@@ -309,11 +317,11 @@
                                     </div>
                                 </div>
                                 <div class="step-footer">
+                                    <div style="display:flex;gap:8px">
+                                    <button class="btn" onclick="prev()">← Back</button>
                                     <button class="mark-btn" onclick="markDone(4)">
                                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
                                     </button>
-                                    <div style="display:flex;gap:8px">
-                                    <button class="btn" onclick="prev()">← Back</button>
                                     <button class="btn btn-primary" onclick="next()">Next step →</button>
                                     </div>
                                 </div>
@@ -322,7 +330,7 @@
                                 <!-- STEP 6 -->
                                 <div class="step-panel" data-step="5">
                                 <div class="step-eyebrow"><span class="step-badge">Step 6 of 7</span></div>
-                                <h1 class="step-h">Run the live service</h1>
+                                <h1 class="step-h">Run the live service and Keyboard <strong>SHORTCUTS</strong></h1>
                                 <p class="step-sub">You're live — follow the order of service from the Services App. Keep an eye on the worship leader for hand cues during songs.</p>
                                 <div class="card">
                                     <div class="card-head">
@@ -390,11 +398,11 @@
                                     </div>
                                 </div>
                                 <div class="step-footer">
+                                    <div style="display:flex;gap:8px">
+                                    <button class="btn" onclick="prev()">← Back</button>
                                     <button class="mark-btn" onclick="markDone(5)">
                                     <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mark complete
                                     </button>
-                                    <div style="display:flex;gap:8px">
-                                    <button class="btn" onclick="prev()">← Back</button>
                                     <button class="btn btn-primary" onclick="next()">Next step →</button>
                                     </div>
                                 </div>
@@ -417,17 +425,20 @@
                                     </div>
                                     <ul class="cl">
                                         <li onclick="ck(this)"><span class="cb"></span><span>Close Pro Presenter</span></li>
-                                        <li onclick="ck(this)"><span class="cb"></span><span>Turn off TV 1</span></li>
-                                        <li onclick="ck(this)"><span class="cb"></span><span>Turn off TV 2</span></li>
-                                        <li onclick="ck(this)"><span class="cb"></span><span>Turn off stage screen</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>Turn off TV 1 (Left)</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>Turn off TV 2 (Right)</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>Turn off TV 3 (Outside)</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>Turn off stage screen monitor</span></li>
                                         <li onclick="ck(this)"><span class="cb"></span><span>Shut down computer</span></li>
+                                        <li onclick="ck(this)"><span class="cb"></span><span>Turn off the power outlet located against the wall</span></li>
                                     </ul>
                                     </div>
                                 </div>
                                 <div class="step-footer">
-                                    <span style="font-size:13px;color:var(--text3)">Final step</span>
+                                    
                                     <div style="display:flex;gap:8px">
                                     <button class="btn" onclick="prev()">← Back</button>
+                                    <span style="font-size:13px;color:var(--text3)">Final step</span>
                                     <button class="btn btn-primary" onclick="finish()">Finish ✓</button>
                                     </div>
                                 </div>
@@ -858,7 +869,7 @@
     </div>
 
     <div class="toast" id="toast"></div>
-    <!-- <script src="app.js"></script> -->
-    <script src="app-obs.js"></script>
+    <script src="app.js"></script>
+    <!-- <script src="app-obs.js"></script> -->
 </body>
 </html>
