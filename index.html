@@ -20,6 +20,12 @@
                 <button class="btn btn-toggle active" onclick="toggleView('manual')" id="btn-sop">
                     SOP Manual
                 </button>
+                <button class="btn btn-toggle active" onclick="toggleView('youtube')" id="btn-recording">
+                    Recording (Youtube) Manual
+                </button>
+                <button class="btn btn-toggle active" onclick="toggleView('obs')" id="btn-obs">
+                    OBS Manual
+                </button>
                 <button class="btn btn-toggle" onclick="toggleView('calendar')" id="btn-calendar">
                     Calendar
                 </button>
@@ -374,7 +380,8 @@
                                         <li onclick="ck(this)"><span class="cb"></span><span>In the Pro Presenter interface, navigate to the <strong>Bible</strong></span></li>
                                         <li onclick="ck(this)"><span class="cb"></span><span>On the search textbox, enter the desired Bible verse</span></li>
                                     </ul>
-                                    <!-- <img src="./assets/email_slide.png" alt="Email Slide icon" style="height:10vw"> -->
+                                    <img src="./assets/bible_selection.png" alt="Bible Selection icon" style="height:25vw">
+                                    <img src="./assets/bible_search.png" alt="Bible Search icon" style="height:25vw">
                                     </div>
                                 </div>
                                 <!-- <div class="card">
@@ -845,6 +852,34 @@
 
                         </div> -->
                     </div>
+
+                    <div id="youtubeView" style="display:none">
+                        <h1 class="youtube-title">YouTube Studio</h1>
+                        <div class="youtube-content">
+                            <div class="youtube-section">
+                                <div class="youtube-section-title">Stream Status</div>
+                                <div class="youtube-status" id="youtubeStatus"></div>
+                            </div>
+                            <div class="youtube-section">
+                                <div class="youtube-section-title">Stream Key</div>
+                                <div class="youtube-key" id="youtubeKey"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="obsView" style="display:none">
+                        <h1 class="obs-title">OBS Studio</h1>
+                        <div class="obs-content">
+                            <div class="obs-section">
+                                <div class="obs-section-title">Scenes</div>
+                                <div class="obs-scenes" id="obsScenes"></div>
+                            </div>
+                            <div class="obs-section">
+                                <div class="obs-section-title">Sources</div>
+                                <div class="obs-sources" id="obsSources"></div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="month-nav" style="display:none">
                         <button onclick="changeMonth(-1)">◀</button>
@@ -955,7 +990,7 @@
     </div>
 
     <div class="toast" id="toast"></div>
-    <!-- <script src="app.js"></script> -->
-    <script src="app-obs.js"></script>
+    <script src="app.js"></script>
+    <!-- <script src="app-obs.js"></script> -->
 </body>
 </html>
